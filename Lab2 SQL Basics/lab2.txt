@@ -1,0 +1,227 @@
+Ans 1:-
+
+
+create database d;
+use d;
+
+
+(i)
+
+create table author(a_id int primary key, name varchar(10), city varchar(10), country varchar(10));
+
+create table publisher(p_id int primary key, name varchar(10), city varchar(10), country varchar(10));
+
+create table catalog(b_id int primary key, title varchar(10), a_id int, p_id int, c_id int, year int, price int);
+
+create table category(c_id int primary key, descri varchar(10));
+
+create table order_details(o_no int primary key, b_id int, quantity int);
+
+
+(ii)
+
+insert into author values (1,'a','p','v'), (2,'b','q','w'),(3,'c','r','x'),(4,'d','s','y'),(5,'e','t','z');
+
+insert into publisher values (11,'aa','pp','vv'), (22,'bb','qq','ww'),(33,'cc','rr','xx'),(44,'dd','ss','yy'),(55,'ee','tt','zz');
+
+insert into catalog values (111,'aaa',1,11,1,1,1), (222,'bbb',2,22,2,2,2),(333,'ccc',3,33,3,3,3),(444,'ddd',4,44,4,4,4),(555,'eee',5,55,5,5,5);
+
+insert into category values (1,'aaaa'), (2,'bbbb'),(3,'cccc'),(4,'dddd'),(5,'eeee');
+
+insert into order_details values (1,111,1), (2,222,2),(3,333,3),(4,444,4),(5,555,5);
+
+
+(iii)
+
+select count(a_id) from author;
++-------------+
+| count(a_id) |
++-------------+
+|           5 |
++-------------+
+
+
+(iv)
+
+select b_id from order_details where quantity in (select max(quantity) from order_details);
++------+
+| b_id |
++------+
+|  555 |
++------+
+
+
+
+Ans 2:-
+
+create table book(acc_no int primary key, yr_pub int, title varchar(20));
+
+insert into book values (734216,1982,'Algorithm design'), (237235,1995,'Database systems'),(631523,1992,'Compiler design'),(543211,1991,'programming'),(376112,1992,'Machine design');
+
+
+(i)
+
+select * from book where yr_pub = 1992;
++--------+--------+-----------------+
+| acc_no | yr_pub | title           |
++--------+--------+-----------------+
+| 631523 |   1992 | Compiler design |
+| 376112 |   1992 | Machine design  |
++--------+--------+-----------------+
+
+(ii)
+
+select * from book where acc_no >= 56782;
++--------+--------+------------------+
+| acc_no | yr_pub | title            |
++--------+--------+------------------+
+| 734216 |   1982 | Algorithm design |
+| 237235 |   1995 | Database systems |
+| 631523 |   1992 | Compiler design  |
+| 543211 |   1991 | programming      |
+| 376112 |   1992 | Machine design   |
++--------+--------+------------------+
+
+(iii)
+
+select acc_no,title from book;
++--------+------------------+
+| acc_no | title            |
++--------+------------------+
+| 734216 | Algorithm design |
+| 237235 | Database systems |
+| 631523 | Compiler design  |
+| 543211 | programming      |
+| 376112 | Machine design   |
++--------+------------------+
+
+(iv)
+
+mysql> alter table book rename column yr_pub to YEAR;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table book rename column  acc_no to SERIAL_NO;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from book;
++-----------+------+------------------+
+| SERIAL_NO | YEAR | title            |
++-----------+------+------------------+
+|    237235 | 1995 | Database systems |
+|    376112 | 1992 | Machine design   |
+|    543211 | 1991 | programming      |
+|    631523 | 1992 | Compiler design  |
+|    734216 | 1982 | Algorithm design |
++-----------+------+------------------+
+
+
+
+Ans 3:-
+
+(i)
+
+create table branch (b_name varchar(10) primary key, b_city varchar(10), assets int);
+
+create table cust (c_name varchar(10) primary key, c_street varchar(10), c_city varchar(10));
+
+create table acc (a_no int primary key, b_name varchar(10), balance int);
+
+create table loan (l_no int primary key, b_name varchar(10), amount int);
+
+create table depositer (c_name varchar(10), acc_no int);
+
+create table borrower (c_name varchar(10), l_no int);
+
+(ii)
+
+insert into branch values ('a','p',11), ('b','q',22),('c','r',33),('d','s',44),('e','t',55);
+
+insert into cust values ('aa','pp','vv'), ('bb','qq','ww'), ('cc','rr','xx'), ('dd','ss','yy'), ('ee','tt','zz');
+
+insert into acc values (1,'a',1), (2,'b',2),(3,'c',3),(4,'d',4),(5,'e',5);
+
+insert into loan values (11,'a',1), (22,'b',2),(33,'c',3),(44,'d',4),(55,'e',5);
+
+insert into depositer values ('aa',1), ('bb',2),('cc',3),('dd',4),('ee',5);
+
+insert into borrower values ('aa',11), ('bb',22),('cc',33),('dd',44),('ee',55);
+
+(iii)
+
+select * from loan where amount >= 12000;
+Empty set (0.00 sec)
+
+(iv)
+
+select b_name from branch where b_city = 'p';
++--------+
+| b_name |
++--------+
+| a      |
++--------+
+
+(v)
+
+select c_name from depositer where acc_no = 3;
++--------+
+| c_name |
++--------+
+| cc     |
++--------+
+
+(vi)
+
+select c_name from cust where c_name like 'a%';
++--------+
+| c_name |
++--------+
+| aa     |
++--------+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

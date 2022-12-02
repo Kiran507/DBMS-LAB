@@ -1,0 +1,9 @@
+
+
+sudo mysql
+
+
+help commandName      // to check sql command manual 
+
+
+
