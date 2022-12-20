@@ -1,0 +1,458 @@
+Ans 1:-
+
+
+create database d;
+use d;
+ 
+
+create table emp (emp_id integer(5), fname varchar(20), lname varchar(20), email varchar(20), phone_no varchar(20), hire_date varchar(20), job_id varchar(20), job_title varchar(20), salary integer(5), com_pct float(5,2), man_id integer(5) primary key, dept_id integer(5));
+ 
+ 
+create table dept (dept_id integer(5), dept_name varchar(20), man_id integer(5), loca_id integer(5) primary key, foreign key(man_id) references emp(man_id));
+
+ 
+create table loca (loca_id integer(5) primary key, street_add varchar(20), p_code integer(5), city varchar(20), stata_prov varchar(20), country_id integer(5), foreign key(loca_id) references dept(loca_id)); 
+ 
+ 
+ 
+/*
+
+163   Clara   aa  a@nitt  111  2-4-22   100   AA        1000  1.11   100   11
+169   Tara    bb  b@nitt  222  1-4-22   200    BB       2000  2.22   200   22
+121   John    cc  c@nitt  333  5-8-22   300  IT_PROG    3000  3.33   300   33
+159   Mark    dd  d@nitt  444  6-1-22   400  IT_PROG    4000  4.44   400   44
+183   Jack    ee  e@nitt  555  9-5-22   500      EE     5000  5.55   500   55
+134   Toe     ff  f@nitt  666  1-6-22   600     FF      6000  6.66   600   11
+ 
+ 
+11   Finance        100    10
+22   IT             200    20  
+33   Construction   300    30
+44   Accounting     400    40
+55   Shiping        500    50
+
+
+10    191  1  Toronto   AA   1
+20    292  2  Delhi     BB   2
+30    393  3  London    CC   3
+40    494  4  NYC       DD   4
+50    595  5  Mumbai    EE   5
+
+*/
+
+
+
+mysql> insert into emp values (163,'Clara','aa','a@nitt',111,'2-4-22',100,'AA',1000,1.11,100,11), (169,'Tara','bb','b@nitt',222,'1-4-22',200,'BB',2000,2.22,200,22), (121,'John','cc','c@nitt',333,'5-8-22',300,'IT_PROG',3000,3.33,300,33),(159,'Mark','dd','d@nitt',444,'6-1-22',400,'IT_PROG',4000,4.44,400,44),(183,'Jack','ee','e@nitt',555,'9-5-22',500,'EE',5000,5.55,500,55), (134,'Toe','ff','f@nitt',666,'1-6-22',600,'FF',6000,6.66,600,11);
+Query OK, 6 rows affected (0.03 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> insert into dept values (11,'Finance',100,10),(22,'IT',200,20),(33,'Construction',300,30),(44,'Accounting',400,40),(55,'Shiping',500,50);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into loca values (10,'191',1,'Toronto','AA',1),(20,'292',2,'Delhi','BB',2),(30,'393',3,'London','CC',3),(40,'494',4,'NYC','DD',4),(50,'595',5,'Mumbai','EE',5);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+ 
+ 
+(i)
+mysql> select fname,lname from emp where salary > (select salary from emp where emp_id=163);
++-------+-------+
+| fname | lname |
++-------+-------+
+| Tara  | bb    |
+| John  | cc    |
+| Mark  | dd    |
+| Jack  | ee    |
+| Toe   | ff    |
++-------+-------+
+5 rows in set (0.01 sec)
+
+
+
+(ii)
+mysql> select fname,lname,salary,dept_id,job_id from emp where job_id = (select job_id from emp where emp_id=169);
++-------+-------+--------+---------+--------+
+| fname | lname | salary | dept_id | job_id |
++-------+-------+--------+---------+--------+
+| Tara  | bb    |   2000 |      22 | 200    |
++-------+-------+--------+---------+--------+
+1 row in set (0.00 sec)
+
+
+
+(iii)
+mysql> select fname,lname,salary,dept_id from emp where salary = (select min(salary) from emp);
++-------+-------+--------+---------+
+| fname | lname | salary | dept_id |
++-------+-------+--------+---------+
+| Clara | aa    |   1000 |      11 |
++-------+-------+--------+---------+
+1 row in set (0.00 sec)
+
+
+
+(iv)
+mysql> select emp_id,fname,lname from emp where salary > (select avg(salary) from emp);
++--------+-------+-------+
+| emp_id | fname | lname |
++--------+-------+-------+
+|    159 | Mark  | dd    |
+|    183 | Jack  | ee    |
+|    134 | Toe   | ff    |
++--------+-------+-------+
+3 rows in set (0.00 sec)
+
+
+
+(v)      
+mysql> select fname,lname,emp_id,salary from emp where man_id = (select emp_id from emp where fname = 'Arun');
+Empty set (0.01 sec)
+
+
+
+(vi)
+mysql> select dept_id,fname,lname,job_id from emp where dept_id = (select dept_id from dept where dept_name like 'Finance');
++---------+-------+-------+--------+
+| dept_id | fname | lname | job_id |
++---------+-------+-------+--------+
+|      11 | Clara | aa    | 100    |
+|      11 | Toe   | ff    | 600    |
++---------+-------+-------+--------+
+2 rows in set (0.00 sec)
+
+
+
+(vii) 
+mysql> select * from emp where salary=3000 and emp_id=121;
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+| emp_id | fname | lname | email  | phone_no | hire_date | job_id | job_title | salary | com_pct | man_id | dept_id |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+|    121 | John  | cc    | c@nitt | 333      | 5-8-22    | 300    | IT_PROG   |   3000 |    3.33 |    300 |      33 |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+1 row in set (0.00 sec)
+
+
+
+(viii)***
+mysql> select * from emp where emp_id in (134,159,183);
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+| emp_id | fname | lname | email  | phone_no | hire_date | job_id | job_title | salary | com_pct | man_id | dept_id |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+|    159 | Mark  | dd    | d@nitt | 444      | 6-1-22    | 400    | IT_PROG   |   4000 |    4.44 |    400 |      44 |
+|    183 | Jack  | ee    | e@nitt | 555      | 9-5-22    | 500    | EE        |   5000 |    5.55 |    500 |      55 |
+|    134 | Toe   | ff    | f@nitt | 666      | 1-6-22    | 600    | FF        |   6000 |    6.66 |    600 |      11 |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+3 rows in set (0.00 sec)
+
+
+
+(ix)
+mysql> select * from emp where salary between 1000 and 3000;
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+| emp_id | fname | lname | email  | phone_no | hire_date | job_id | job_title | salary | com_pct | man_id | dept_id |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+|    163 | Clara | aa    | a@nitt | 111      | 2-4-22    | 100    | AA        |   1000 |    1.11 |    100 |      11 |
+|    169 | Tara  | bb    | b@nitt | 222      | 1-4-22    | 200    | BB        |   2000 |    2.22 |    200 |      22 |
+|    121 | John  | cc    | c@nitt | 333      | 5-8-22    | 300    | IT_PROG   |   3000 |    3.33 |    300 |      33 |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+3 rows in set (0.00 sec)
+
+
+
+(x)
+mysql> select * from emp where salary between (select min(salary) from emp) and 3000;
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+| emp_id | fname | lname | email  | phone_no | hire_date | job_id | job_title | salary | com_pct | man_id | dept_id |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+|    163 | Clara | aa    | a@nitt | 111      | 2-4-22    | 100    | AA        |   1000 |    1.11 |    100 |      11 |
+|    169 | Tara  | bb    | b@nitt | 222      | 1-4-22    | 200    | BB        |   2000 |    2.22 |    200 |      22 |
+|    121 | John  | cc    | c@nitt | 333      | 5-8-22    | 300    | IT_PROG   |   3000 |    3.33 |    300 |      33 |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+3 rows in set (0.00 sec)
+
+
+
+(xi)
+mysql> select * from emp where dept_id not in (select dept_id from emp where man_id between 100 and 200);
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+| emp_id | fname | lname | email  | phone_no | hire_date | job_id | job_title | salary | com_pct | man_id | dept_id |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+|    121 | John  | cc    | c@nitt | 333      | 5-8-22    | 300    | IT_PROG   |   3000 |    3.33 |    300 |      33 |
+|    159 | Mark  | dd    | d@nitt | 444      | 6-1-22    | 400    | IT_PROG   |   4000 |    4.44 |    400 |      44 |
+|    183 | Jack  | ee    | e@nitt | 555      | 9-5-22    | 500    | EE        |   5000 |    5.55 |    500 |      55 |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+3 rows in set (0.00 sec)
+
+
+
+(xii)
+mysql> select * from emp where salary = (select max(salary) from emp where salary != (select max(salary) from emp));
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+| emp_id | fname | lname | email  | phone_no | hire_date | job_id | job_title | salary | com_pct | man_id | dept_id |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+|    183 | Jack  | ee    | e@nitt | 555      | 9-5-22    | 500    | EE        |   5000 |    5.55 |    500 |      55 |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+1 row in set (0.00 sec)
+
+
+
+(xiii)
+mysql> select fname,lname,hire_date from emp where dept_id = (select dept_id from emp where fname like 'Clara') and fname != 'Clara';
++-------+-------+-----------+
+| fname | lname | hire_date |
++-------+-------+-----------+
+| Toe   | ff    | 1-6-22    |
++-------+-------+-----------+
+1 row in set (0.00 sec)
+
+
+
+(xiv)
+mysql> select emp_id,fname,lname from emp where dept_id in (select dept_id from emp where fname like '%T%');
++--------+-------+-------+
+| emp_id | fname | lname |
++--------+-------+-------+
+|    100 | Arun  | aa    |
+|    163 | Clara | aa    |
+|    164 | Clara | aa    |
+|    169 | Tara  | bb    |
+|    134 | Toe   | ff    |
++--------+-------+-------+
+5 rows in set (0.01 sec)
+
+
+
+
+(xv)
+mysql> select emp_id,fname,lname,salary from emp where dept_id in (select dept_id from emp where fname like '%J%') and salary > (select avg(salary) from emp);
++--------+-------+-------+--------+
+| emp_id | fname | lname | salary |
++--------+-------+-------+--------+
+|    121 | John  | cc    |   3000 |
+|    183 | Jack  | ee    |   5000 |
++--------+-------+-------+--------+
+2 rows in set (0.01 sec)
+
+
+
+
+(xvi)
+mysql> select emp.fname,emp.lname,emp.emp_id,emp.job_title from emp,dept,loca where loca.city='Toronto' and dept.loca_id=loca.loca_id and emp.dept_id=dept.dept_id;
+
+or
+
+mysql> select fname,lname,emp_id,job_title from emp where dept_id in (select dept_id from dept where loca_id in (select loca_id from loca where city like 'Toronto'));
++-------+-------+--------+-----------+
+| fname | lname | emp_id | job_title |
++-------+-------+--------+-----------+
+| Clara | aa    |    163 | AA        |
+| Toe   | ff    |    134 | FF        |
++-------+-------+--------+-----------+
+2 rows in set (0.00 sec)
+
+
+
+(xvii)
+select emp_id,fname,lname,job_title from emp where salary < any (select salary from emp where job_title like 'IT_PROG');
++--------+-------+-------+-----------+
+| emp_id | fname | lname | job_title |
++--------+-------+-------+-----------+ 
+|    163 | Clara | aa    | AA        |
+|    169 | Tara  | bb    | BB        |
++--------+-------+-------+-----------+
+4 rows in set (0.00 sec)
+
+
+
+(xviii)
+mysql> select emp_id,fname,lname,job_title from emp where salary < any (select salary from emp where job_title like 'IT_PROG') and job_title not like 'IT_PROG';
++--------+-------+-------+-----------+
+| emp_id | fname | lname | job_title |
++--------+-------+-------+-----------+
+|    100 | Arun  | aa    | AA        |
+|    163 | Clara | aa    | AA        |
+|    164 | Clara | aa    | AA        |
+|    169 | Tara  | bb    | BB        |
++--------+-------+-------+-----------+
+4 rows in set (0.00 sec)
+
+
+
+
+(xix)
+mysql> select emp_id,fname,lname,job_title from emp where salary > all (select salary from emp where job_title like 'IT_PROG') and job_title not like 'IT_PROG';
++--------+-------+-------+-----------+
+| emp_id | fname | lname | job_title |
++--------+-------+-------+-----------+
+|    183 | Jack  | ee    | EE        |
+|    134 | Toe   | ff    | FF        |
++--------+-------+-------+-----------+
+2 rows in set (0.00 sec)
+
+
+
+(xx)
+mysql> select emp_id,fname,lname,job_title from emp where salary > all (select avg(salary) from emp group by dept_id);
++--------+-------+-------+-----------+
+| emp_id | fname | lname | job_title |
++--------+-------+-------+-----------+
+|    134 | Toe   | ff    | FF        |
++--------+-------+-------+-----------+
+1 row in set (0.00 sec)
+ 
+ 
+(xxi)
+mysql> select * from emp where salary = (select min(distinct(salary)) from emp where salary!=(select min(salary) from emp));
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+| emp_id | fname | lname | email  | phone_no | hire_date | job_id | job_title | salary | com_pct | man_id | dept_id |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+|    169 | Tara  | bb    | b@nitt | 222      | 1-4-22    | 200    | BB        |   2000 |    2.22 |    200 |      22 |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+1 row in set (0.00 sec)
+
+
+(xxii)
+mysql> select city from loca where loca_id=(select loca_id from dept where dept_id=(select dept_id from emp where emp_id=136));
+
+or
+
+mysql> select loca.city from loca,emp,dept where emp.emp_id = 136 and dept.dept_id = emp.dept_id and dept.loca_id = loca.loca_id;
+Empty set (0.00 sec)
+
+
+
+
+
+(xxiii)
+mysql> select emp.fname, emp.lname, emp.com_pct, emp.dept_id from emp,dept,loca where loca.city='London' and dept.dept_id=emp.dept_id and loca.loca_id = dept.loca_id;
++-------+-------+---------+---------+
+| fname | lname | com_pct | dept_id |
++-------+-------+---------+---------+
+| John  | cc    |    3.33 |      33 |
++-------+-------+---------+---------+
+1 row in set (0.00 sec)
+
+
+
+
+(xxiv)
+mysql> select fname, lname, salary, dept_id from emp where salary > (select avg(salary) from emp) order by salary desc;
++-------+-------+--------+---------+
+| fname | lname | salary | dept_id |
++-------+-------+--------+---------+
+| Toe   | ff    |   6000 |      11 |
+| Jack  | ee    |   5000 |      55 |
+| Mark  | dd    |   4000 |      44 |
+| John  | cc    |   3000 |      33 |
++-------+-------+--------+---------+
+4 rows in set (0.00 sec)
+
+
+
+
+(xxv)***
+
+mysql> select * from emp where emp_id in (select man_id from emp);
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+| emp_id | fname | lname | email  | phone_no | hire_date | job_id | job_title | salary | com_pct | man_id | dept_id |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+|    100 | Arun  | aa    | a@nitt | 111      | 2-4-22    | 100    | AA        |   1000 |    1.11 |      0 |      11 |
+|    163 | Clara | aa    | a@nitt | 111      | 2-4-22    | 100    | AA        |   1000 |    1.11 |    100 |      11 |
++--------+-------+-------+--------+----------+-----------+--------+-----------+--------+---------+--------+---------+
+2 rows in set (0.01 sec)
+
+
+
+select * from emp where emp_id exists (select man_id from emp);
+error
+ 
+(xxvi)
+mysql> select fname from emp as A where salary > 0.5*(select sum(salary) from emp as B where A.dept_id=B.dept_id);
++-------+
+| fname |
++-------+
+| Tara  |
+| John  |
+| Mark  |
+| Jack  |
+| Toe   |
++-------+
+5 rows in set (0.00 sec)
+
+
+
+(xxvii)
+mysql> select distinct(dept_name) from dept where (select count(*) from emp where emp.dept_id=dept.dept_id) >= 1;
++--------------+
+| dept_name    |
++--------------+
+| Finance      |
+| IT           |
+| Construction |
+| Accounting   |
+| Shiping      |
++--------------+
+5 rows in set (0.00 sec)
+
+
+
+
+(xxviii)***
+mysql> select emp.fname,emp.lname,dept.dept_name from emp,dept where dept.dept_id = emp.dept_id and emp.salary > 3700;
++-------+-------+------------+
+| fname | lname | dept_name  |
++-------+-------+------------+
+| Toe   | ff    | Finance    |
+| Mark  | dd    | Accounting |
+| Jack  | ee    | Shiping    |
++-------+-------+------------+
+3 rows in set (0.01 sec)
+
+
+
+(xxix)***
+
+mysql> select dept_id,dept_name from dept where dept_id not exists (select dept_id from emp);
+error
+
+mysql> select dept_id,dept_name from dept where dept_id not in (select dept_id from emp);
+Empty set (0.01 sec)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
