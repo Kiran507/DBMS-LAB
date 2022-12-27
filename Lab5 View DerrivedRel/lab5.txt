@@ -1,0 +1,144 @@
+
+Ans 1:-
+
+/* 'year-month-day' for date  */
+
+
+
+create table cust (cust_id integer(5) primary key, cust_name varchar(20));
+
+create table item (item_id integer(5) primary key, item_name varchar(20), price integer(8));
+
+create table sale (bill_no integer(5) primary key, bill_date date, cust_id integer(5), item_id integer(5), qty_sold integer(5), foreign key(cust_id) references cust(cust_id), foreign key(item_id) references item(item_id));
+
+
+
+insert into cust values (1,'Mark'),(2,'Joe'),(3,'Bill'),(4,'Jai'),(5,'John'),(6,'Tom'),(7,'Jack'),(8,'Ram'),(9,'Aman'),(10,'Amit');
+
+insert into item values (11,'Bat',5000),(22,'Hat',1000),(33,'Ball',3000),(44,'Gun',10000),(55,'Bun',5000),(66,'Tea',5000),(77,'Milk',10000),(88,'Ring',20000),(99,'Car',50000),(00,'Bike',20000);
+
+insert into sale values (1,'2021-3-11',3,11,2),(2,'2021-8-10',1,88,1),(3,'2021-9-21',3,99,1),(4,'2022-1-1',7,55,1),(5,'2021-7-4',5,44,2),(6,'2021-10-21',8,66,3),(7,'2021-1-21',7,0,1),(8,'2021-3-1',9,11,1),(9,'2022-5-9',10,77,2),(10,'2021-2-20',4,55,1);
+
+
+
+Ans 2:-
+
+ 
+mysql> create view ShowData as (select s.bill_no,s.bill_date,s.cust_id,s.item_id,i.price,s.qty_sold,(i.price*s.qty_sold) as amount 
+from sale as s, item as i where s.item_id=i.item_id);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from ShowData;
++---------+------------+---------+---------+-------+----------+--------+
+| bill_no | bill_date  | cust_id | item_id | price | qty_sold | amount |
++---------+------------+---------+---------+-------+----------+--------+
+|       1 | 2021-03-11 |       3 |      11 |  5000 |        2 |  10000 |
+|       2 | 2021-08-10 |       1 |      88 | 20000 |        1 |  20000 |
+|       3 | 2021-09-21 |       3 |      99 | 50000 |        1 |  50000 |
+|       4 | 2022-01-01 |       7 |      55 |  5000 |        1 |   5000 |
+|       5 | 2021-07-04 |       5 |      44 | 10000 |        2 |  20000 |
+|       6 | 2021-10-21 |       8 |      66 |  5000 |        3 |  15000 |
+|       7 | 2021-01-21 |       7 |       0 | 20000 |        1 |  20000 |
+|       8 | 2021-03-01 |       9 |      11 |  5000 |        1 |   5000 |
+|       9 | 2022-05-09 |      10 |      77 | 10000 |        2 |  20000 |
+|      10 | 2021-02-20 |       4 |      55 |  5000 |        1 |   5000 |
++---------+------------+---------+---------+-------+----------+--------+
+10 rows in set (0.00 sec)
+
+
+
+Ans 3:-
+
+ 
+mysql> create view ShowDataOfOldDays as (select s.bill_no, s.bill_date, s.cust_id, s.item_id, i.price, s.qty_sold, (i.price*s.qty_sold) as amount, timestampdiff(day,bill_date,curdate()) as daysRange from sale as s, item as i where s.item_id = i.item_id);
+Query OK, 0 rows affected (0.02 sec)
+
+
+mysql> select * from ShowDataOfOldDays where daysRange < 7;
++---------+------------+---------+---------+-------+----------+--------+-----------+
+| bill_no | bill_date  | cust_id | item_id | price | qty_sold | amount | daysRange |
++---------+------------+---------+---------+-------+----------+--------+-----------+
+|      11 | 2022-09-08 |       7 |      11 |  5000 |        1 |   5000 |         1 |
+|      14 | 2022-09-05 |       6 |      11 |  5000 |        2 |  10000 |         4 |
+|      15 | 2022-09-06 |       9 |      66 |  5000 |        1 |   5000 |         3 |
+|      13 | 2022-09-03 |       2 |      88 | 20000 |        1 |  20000 |         6 |
++---------+------------+---------+---------+-------+----------+--------+-----------+
+4 rows in set (0.00 sec)
+
+
+
+Ans 4:-
+mysql> select i.item_id, i.price*(select sum(s.qty_sold) from sale as s where s.item_id=i.item_id and s.bill_date like '2021-%') as amount from item as i order by amount desc limit 5;
++---------+--------+
+| item_id | amount |
++---------+--------+
+|      99 |  50000 |
+|       0 |  20000 |
+|      44 |  20000 |
+|      88 |  20000 |
+|      11 |  15000 |
++---------+--------+
+5 rows in set (0.01 sec)
+
+
+
+Ans 5:-
+
+
+mysql> select count(*) as SilverCustomerCount from (select c.cust_id, (select sum(i.price*(select sum(s.qty_sold) from sale s where s.item_id=i.item_id and s.cust_id=c.cust_id and s.bill_date like '2021-%')) from item i) as purchase from cust c) as CustGroups
+where CustGroups.purchase<10000;
++---------------------+
+| SilverCustomerCount |
++---------------------+
+|                   2 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) as GoldenCustomerCount from (select c.cust_id, (select sum(i.price*(select sum(s.qty_sold) from sale s wher
+e s.item_id=i.item_id and s.cust_id=c.cust_id and s.bill_date like '2021-%')) from item i) as purchase from cust c) as CustGroups
+where CustGroups.purchase<50000 and CustGroups.purchase>10000;
++---------------------+
+| GoldenCustomerCount |
++---------------------+
+|                   4 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) as PlatinumCustomerCount from (select c.cust_id, (select sum(i.price*(select sum(s.qty_sold) from sale s wh
+ere s.item_id=i.item_id and s.cust_id=c.cust_id and s.bill_date like '2021-%')) from item i) as purchase from cust c) as CustGroup
+s where CustGroups.purchase>50000;
++-----------------------+
+| PlatinumCustomerCount |
++-----------------------+
+|                     1 |
++-----------------------+
+1 row in set (0.00 sec)
+
+
+
+Ans 6:-
+
+
+mysql> select * from(select c.cust_id, (select sum(i.price*(select sum(s.qty_sold) from sale s where s.item_id=i.item_id and s.cust_id = c.cust_id and s.bill_date like "2021-%")) from item i) as purchase from cust c) as sil order by sil.purchase desc limit 5;
++---------+----------+
+| cust_id | purchase |
++---------+----------+
+|       3 |    60000 |
+|       1 |    40000 |
+|       5 |    20000 |
+|       7 |    20000 |
+|       8 |    15000 |
++---------+----------+
+5 rows in set (0.00 sec)
+
+
+
+ 
+
+
+
+
+
+
+
+
