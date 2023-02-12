@@ -1,0 +1,14 @@
+1. (ii)
+
+let $d:=doc("student.xml")/StudentDetails/Student
+
+1.
+for $x in $d
+where $x/Marks>75
+return ($x/Marks," ")
+
+78 87 90 78 85 
+
+
+2.
+

@@ -1,0 +1,271 @@
+mysql> create database dtb;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use dtb;
+Database changed
+
+
+ 
+mysql> create table dept (dept_no integer(2) primary key, d_name varchar(10), loc varchar(10));
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> create table emp (emp_no integer(6) primary key, e_name varchar(20), job varchar(10), dept_no integer(3), salary float(7,2), foreign key(dept_no) references dept(dept_no));
+Query OK, 0 rows affected, 3 warnings (0.05 sec)
+
+ mysql> insert into dept values (1,'Sales','Delhi'),(2,'Dev','Madras'),(3,'Cleaning','Goa'),(4,'Finance','Mumbai'),(5,'Social','Noida');
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into emp values (1,'Ajay','Guard',3,10000),(2,'Aman','Manager',4,20000),(3,'Amar','Salesman',1,30000),(4,'Ram','Philospher',5,40000),(5,'Avi','Sde',2,50000);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+ 
+Ans 1:-
+ 
+ 
+ 
+mysql> create procedure EmployeeData (in var int) begin 
+select * from emp where emp_no = var; end; $$
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> call EmployeeData(3); $$
++--------+--------+----------+---------+----------+
+| emp_no | e_name | job      | dept_no | salary   |
++--------+--------+----------+---------+----------+
+|      3 | Amar   | Salesman |       1 | 30000.00 |
++--------+--------+----------+---------+----------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+
+
+Ans 2:-
+ 
+ 
+ 
+mysql> create procedure AddEmployeeData (in a integer(6), b varchar(20), c varchar(10), d integer(3), e float(7,2)) insert into emp values (a,b,c,d,e); end; $$
+Query OK, 0 rows affected, 3 warnings (0.02 sec)
+ 
+mysql> call AddEmployeeData(6,'Joe','Head',5,60000); $$
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp; $$
++--------+--------+------------+---------+----------+
+| emp_no | e_name | job        | dept_no | salary   |
++--------+--------+------------+---------+----------+
+|      1 | Ajay   | Guard      |       3 | 10000.00 |
+|      2 | Aman   | Manager    |       4 | 20000.00 |
+|      3 | Amar   | Salesman   |       1 | 30000.00 |
+|      4 | Ram    | Philospher |       5 | 40000.00 |
+|      5 | Avi    | Sde        |       2 | 50000.00 |
+|      6 | Joe    | Head       |       5 | 60000.00 |
++--------+--------+------------+---------+----------+
+6 rows in set (0.00 sec)
+ 
+ 
+ 
+Ans 3:-
+
+
+
+mysql> create procedure RaiseSalary (in a integer(6), x float(7,2)) begin update
+ emp set salary = salary + x where emp_no = a; end; $$
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> call RaiseSalary(1,5000); $$
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from emp; $$
++--------+--------+------------+---------+----------+
+| emp_no | e_name | job        | dept_no | salary   |
++--------+--------+------------+---------+----------+
+|      1 | Ajay   | Guard      |       3 | 15000.00 |
+|      2 | Aman   | Manager    |       4 | 20000.00 |
+|      3 | Amar   | Salesman   |       1 | 30000.00 |
+|      4 | Ram    | Philospher |       5 | 40000.00 |
+|      5 | Avi    | Sde        |       2 | 50000.00 |
+|      6 | Joe    | Head       |       5 | 60000.00 |
++--------+--------+------------+---------+----------+
+6 rows in set (0.00 sec)
+
+
+
+Ans 4:-
+
+
+
+mysql> create procedure DelRecord (in a integer(6)) begin delete from emp where
+emp_no = a; end; $$
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> call DelRecord(6); $$
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from emp; $$
++--------+--------+------------+---------+----------+
+| emp_no | e_name | job        | dept_no | salary   |
++--------+--------+------------+---------+----------+
+|      1 | Ajay   | Guard      |       3 | 15000.00 |
+|      2 | Aman   | Manager    |       4 | 20000.00 |
+|      3 | Amar   | Salesman   |       1 | 30000.00 |
+|      4 | Ram    | Philospher |       5 | 40000.00 |
+|      5 | Avi    | Sde        |       2 | 50000.00 |
++--------+--------+------------+---------+----------+
+5 rows in set (0.00 sec)
+
+
+
+Ans 5:-
+ 
+ 
+ 
+mysql> create function MinSalary() returns float(7,2) deterministic begin declare var float(7,2); select min(salary) from emp into var; return var; end;  $$
+Query OK, 0 rows affected, 2 warnings (0.01 sec)
+
+mysql> select MinSalary() $$
++-------------+
+| MinSalary() |
++-------------+
+|    15000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+
+
+Ans 6:-
+
+
+
+mysql> create function EmpCount() returns int deterministic begin declare var int; select count(emp_no) from emp into var; return var; end;  $$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select EmpCount(); $$
++------------+
+| EmpCount() |
++------------+
+|          5 |
++------------+
+1 row in set (0.00 sec)
+
+
+ 
+Ans 7:-
+ 
+ 
+ 
+mysql> create function EmpSalary(x int) returns float(7,2) deterministic begin declare var float(7,2); select salary from emp where emp_no = x into var; return var; end;  $$
+Query OK, 0 rows affected, 2 warnings (0.01 sec)
+
+mysql> select EmpSalary(5); $$
++-------------+
+| EmpSalary() |
++-------------+
+|    50000.00 |
++-------------+
+1 row in set (0.00 sec)
+
+
+ 
+Ans 8:-
+ 
+ 
+mysql> create function AvgDeptSalarye(x int) returns float(7,2) deterministic begin declare var float(7,2); select avg(salary) from emp where dept_no = x into var; return var; end; $$
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> select AvgDeptSalary(3); $$
++------------------+
+| AvgDeptSalary(3) |
++------------------+
+|         15000.00 |
++------------------+
+1 row in set (0.00 sec)
+
+
+ 
+Ans 9:-
+
+
+
+mysql> create procedure DeptEmployeeData (in var int) begin select * from emp where dept_no = var; end; $$
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call DeptEmployeeData(5); $$
++--------+--------+------------+---------+----------+
+| emp_no | e_name | job        | dept_no | salary   |
++--------+--------+------------+---------+----------+
+|      4 | Ram    | Philospher |       5 | 40000.00 |
++--------+--------+------------+---------+----------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
+
+Ans 10:-
+ 
+ 
+ 
+mysql> create procedure DeptMaxSalary() begin select dept_no,max(salary) from emp group by dept_no; end; $$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> call DeptMaxSalary() $$
++---------+-------------+
+| dept_no | max(salary) |
++---------+-------------+
+|       1 |    30000.00 |
+|       2 |    50000.00 |
+|       3 |    15000.00 |
+|       4 |    20000.00 |
+|       5 |    40000.00 |
++---------+-------------+
+5 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+ 
+ 
+Ans 11:-
+
+
+
+mysql> create function NoOfEmp() returns int deterministic begin declare var int; select count(emp_no) from emp where salary > 30000 into var; return var; end; $$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select NoOfEmp(); $$
++-----------+
+| NoOfEmp() |
++-----------+
+|         2 |
++-----------+
+1 row in set (0.00 sec)
+
+
+ 
+Ans 12:-
+
+ 
+ 
+mysql> create function CountMumbaiEmp() returns int deterministic begin declare var int; select count(emp.emp_no) from emp,dept where emp.dept_no = dept.dept_no and dept.loc like 'Mumbai' into var; return var; end; $$
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select CountMumbaiEmp(); $$
++------------------+
+| CountMumbaiEmp() |
++------------------+
+|                1 |
++------------------+
+1 row in set (0.00 sec)
+
+
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 

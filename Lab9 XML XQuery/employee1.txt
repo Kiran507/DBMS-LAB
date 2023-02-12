@@ -1,0 +1,50 @@
+1. (i)
+
+let $d:=doc("employee.xml")/EmployeeDetails/Employee
+
+1.
+for $x in $d
+where $x/Salary>30000
+return ($x/Salary," ")
+
+3000000 2500000 5000000 3000000 5000000 
+
+
+2.
+for $x in $d
+where starts-with($x/Ename,"S")
+return ($x/EmpNo," ")
+
+2 4 5 
+
+
+3.
+for $x in $d
+where $x/Dept="Research"
+return ($x/Ename," ")
+
+Sam 
+
+
+4.
+for $x in $d
+where $x/Job="Manager" and $x/WorkingHours>8
+return ($x/Ename," ")
+
+Varun 
+
+
+5.
+for $x in $d
+order by $x/Salary descending
+return ($x/Salary," ")
+
+5000000 5000000 3000000 3000000 2500000 
+
+
+6.
+for $x in $d
+order by $x/Ename
+return ($x/Ename," ")
+
+Khushi Sam Sidddarth Silky Varun 

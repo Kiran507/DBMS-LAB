@@ -1,0 +1,22 @@
+2. (ii)
+
+let $d:=doc("employee2.xml")/EmployeeDetails/Employee
+
+1.
+for $x in $d
+where $x/Dept="Human Resources"
+return ($x/EName," ")
+
+Khushi Gayathri 
+
+
+2.
+for $x in $d
+where $x/Salary>50000
+return ($x/EName," ")
+
+Khushi Varun Sam Neha Gayathri 
+
+
+3.
+

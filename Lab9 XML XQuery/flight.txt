@@ -1,0 +1,42 @@
+2. (i)
+
+let $d:=doc("flight.xml")/FlightDetails/Flight
+
+1.
+for $x in $d
+where $x/Price<5000
+return ($x/Price," ")
+
+4000 
+
+
+2.
+for $x in $d
+where $x/Date="4-12-2020"
+return ($x/DepartsTime," ")
+
+16.00 
+
+
+3.
+for $x in $d
+where $x/PilotName="John"
+return ($x/FlName," ")
+
+Emirates Air India 
+
+
+4.
+for $x in $d
+where $x/Date="30-11-2020"
+return count($x/FlNo)
+
+1 1
+
+
+5.
+for $x in $d
+where $x/Date="25-11-2020"
+return ($x/ArrivalTime," ")
+
+20.00 

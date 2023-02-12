@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- New XML document created with EditiX XML Editor (http://www.editix.com) at Fri Nov 11 16:30:46 IST 2022 -->
+
+<FlightDetails>
+	
+	<Flight>
+		<FlNo>1</FlNo>
+		<FlName>Emirates</FlName>
+		<PilotName>John</PilotName>	
+		<From>Dubai</From>
+		<To>Chennai</To>
+		<Date>25-11-2020</Date>
+		<DepartsTime>16.00</DepartsTime>
+		<ArrivesTime>20.00</ArrivesTime>
+		<Price>16000</Price>
+	</Flight>
+	
+	<Flight>
+		<FlNo>2</FlNo>
+		<FlName>Indigo</FlName>
+		<PilotName>Peter</PilotName>	
+		<From>Chennai</From>
+		<To>Dubai</To>
+		<Date>26-11-2022</Date>
+		<DepartsTime>11.00</DepartsTime>
+		<ArrivesTime>15.00</ArrivesTime>
+		<Price>15000</Price>
+	</Flight>
+	
+	<Flight>
+		<FlNo>3</FlNo>
+		<FlName>Air India</FlName>
+		<PilotName>Louis</PilotName>	
+		<From>Trichy</From>
+		<To>Sharjah</To>
+		<Date>30-11-2020</Date>
+		<DepartsTime>06.00</DepartsTime>
+		<ArrivesTime>10.00</ArrivesTime>
+		<Price>14000</Price>
+	</Flight>
+	
+	<Flight>
+		<FlNo>4</FlNo>
+		<FlName>Air India</FlName>
+		<PilotName>John</PilotName>	
+		<From>Dubai</From>
+		<To>Chennai</To>
+		<Date>30-11-2020</Date>
+		<DepartsTime>16.00</DepartsTime>
+		<ArrivesTime>20.00</ArrivesTime>
+		<Price>16000</Price>
+	</Flight>
+	
+	<Flight>
+		<FlNo>5</FlNo>
+		<FlName>Indigo</FlName>
+		<PilotName>Peter</PilotName>	
+		<From>Hyderabad</From>
+		<To>Trichy</To>
+		<Date>4-12-2020</Date>
+		<DepartsTime>16.00</DepartsTime>
+		<ArrivesTime>17.00</ArrivesTime>
+		<Price>4000</Price>
+	</Flight>
+
+</FlightDetails>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- New XML document created with EditiX XML Editor (http://www.editix.com) at Fri Nov 11 15:43:31 IST 2022 -->
+
+<EmployeeDetails>
+	
+	<Employee>
+		<EmpNo>1</EmpNo>
+		<Ename>Khushi</Ename>
+		<Job>SDE</Job>
+		<WorkingHours>8</WorkingHours>
+		<Dept>Technology</Dept>
+		<DeptNo>1</DeptNo>
+		<Salary>3000000</Salary>
+	</Employee>
+
+	<Employee>
+		<EmpNo>2</EmpNo>
+		<Ename>Sidddarth</Ename>
+		<Job>Product Engineer</Job>
+		<WorkingHours>8</WorkingHours>
+		<Dept>Development</Dept>
+		<DeptNo>2</DeptNo>
+		<Salary>2500000</Salary>
+	</Employee>
+	
+	<Employee>
+		<EmpNo>3</EmpNo>
+		<Ename>Varun</Ename>
+		<Job>Manager</Job>
+		<WorkingHours>10</WorkingHours>
+		<Dept>Management</Dept>
+		<DeptNo>3</DeptNo>
+		<Salary>5000000</Salary>
+	</Employee>
+	
+	<Employee>
+		<EmpNo>4</EmpNo>
+		<Ename>Silky</Ename>
+		<Job>SDE</Job>
+		<WorkingHours>8</WorkingHours>
+		<Dept>Technology</Dept>
+		<DeptNo>1</DeptNo>
+		<Salary>3000000</Salary>
+	</Employee>
+	
+	<Employee>
+		<EmpNo>5</EmpNo>
+		<Ename>Sam</Ename>
+		<Job>ML Researcher</Job>
+		<WorkingHours>8</WorkingHours>
+		<Dept>Research</Dept>
+		<DeptNo>4</DeptNo>
+		<Salary>5000000</Salary>
+	</Employee>
+	
+</EmployeeDetails>

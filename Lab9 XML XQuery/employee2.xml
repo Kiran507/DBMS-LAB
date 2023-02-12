@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- New XML document created with EditiX XML Editor (http://www.editix.com) at Fri Nov 11 16:52:56 IST 2022 -->
+
+<EmployeeDetails>
+	
+	<Employee>
+		<EID>1</EID>
+		<EName>Khushi</EName>
+		<Project>College Recruitment</Project>
+		<Job>Recruiter</Job>
+		<Dept>Human Resources</Dept>
+		<DeptNo>1</DeptNo>
+		<Salary>500000</Salary>
+	</Employee>
+	
+	<Employee>
+		<EID>2</EID>
+		<EName>Varun</EName>
+		<Project>Website Development</Project>
+		<Job>SDE</Job>
+		<Dept>Technology</Dept>
+		<DeptNo>2</DeptNo>
+		<Salary>3000000</Salary>
+	</Employee>
+	
+	<Employee>
+		<EID>3</EID>
+		<EName>Sam</EName>
+		<Project>Website Development</Project>
+		<Job>Manager</Job>
+		<Dept>Management</Dept>
+		<DeptNo>3</DeptNo>
+		<Salary>5000000</Salary>
+	</Employee>
+	
+	<Employee>
+		<EID>4</EID>
+		<EName>Neha</EName>
+		<Project>Website Development</Project>
+		<Job>SDE</Job>
+		<Dept>Technology</Dept>
+		<DeptNo>2</DeptNo>
+		<Salary>3000000</Salary>
+	</Employee>
+	
+	<Employee>
+		<EID>5</EID>
+		<EName>Gayathri</EName>
+		<Project>College Recruitment</Project>
+		<Job>Recruiter</Job>
+		<Dept>Human Resources</Dept>
+		<DeptNo>1</DeptNo>
+		<Salary>5000000</Salary>
+	</Employee>
+
+</EmployeeDetails>
+
+

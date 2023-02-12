@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- New XML document created with EditiX XML Editor (http://www.editix.com) at Fri Nov 11 16:04:27 IST 2022 -->
+
+<StudentDetails>
+	
+	<Student>
+		<STUID>1</STUID>
+		<Sname>Khushi</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>Computer Networks</Subject>
+		<Marks>78</Marks>
+	</Student>
+
+	<Student>
+		<STUID>1</STUID>
+		<Sname>Khushi</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>DBMS</Subject>
+		<Marks>87</Marks>
+	</Student>	
+	
+	<Student>
+		<STUID>2</STUID>
+		<Sname>Sam</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>Computer Networks</Subject>
+		<Marks>70</Marks>
+	</Student>
+
+	<Student>
+		<STUID>2</STUID>
+		<Sname>Sam</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>DBMS</Subject>
+		<Marks>70</Marks>
+	</Student>	
+	
+	<Student>
+		<STUID>3</STUID>
+		<Sname>Kevin</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>Computer Networks</Subject>
+		<Marks>60</Marks>
+	</Student>
+
+	<Student>
+		<STUID>3</STUID>
+		<Sname>Kevin</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>DBMS</Subject>
+		<Marks>90</Marks>
+	</Student>	
+	
+	<Student>
+		<STUID>4</STUID>
+		<Sname>Sal</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>Computer Networks</Subject>
+		<Marks>78</Marks>
+	</Student>
+
+	<Student>
+		<STUID>4</STUID>
+		<Sname>Sal</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>DBMS</Subject>
+		<Marks>85</Marks>
+	</Student>	
+	
+	<Student>
+		<STUID>5</STUID>
+		<Sname>Brintha</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>Computer Networks</Subject>
+		<Marks>50</Marks>
+	</Student>
+
+	<Student>
+		<STUID>5</STUID>
+		<Sname>Brintha</Sname>
+		<Course>B. Tech</Course>
+		<Dept>CSE</Dept>
+		<Subject>DBMS</Subject>
+		<Marks>45</Marks>
+	</Student>	
+	
+</StudentDetails>
